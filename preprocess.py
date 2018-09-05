@@ -1,5 +1,6 @@
 from slack_history import *
 import argparse
+import copy
 
 def split_sents(message, split_symbol):
 	# insert a split symbol into message for splitting sentences
@@ -19,7 +20,6 @@ def split_sents(message, split_symbol):
 def formatData(messages):
 	formattedMessages=[]
 	for m in messages:
-		print(m)
 		if m["type"] == "message":
 			formattedMessages.append(m["text"])
 	
@@ -57,4 +57,10 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	messages = getChannelsMessage(args.token)
 	for m in messages:
-		print(formatData(m))
+		formatted_messages = formatData(m)
+		for message in formatted_messages:
+			vocab_to_int, int_to_vocab = create_lookup_tables(message)
+			print(vocab_to_int)
+			print(int_to_vocab)
+	
+
